@@ -55,3 +55,14 @@ checkString:
 skipping:
     addi $t2,$t2,-1
     j moving // jumping to loop function
+vaildCharacter:
+    addi $t3, $t3,1
+    mul $t2,$t2,$t7
+    j moving // jumping to loop function
+invalidCharacter:
+    lb $s0, ($t0) // loading bits
+    beq $s0, 0, withinString
+    beq $s0, 10, withinString
+    addi $t0,$t0,1
+    beq $s0, 44, withinString
+    j invalidCharacter // jumping to function
