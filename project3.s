@@ -41,3 +41,17 @@ moving: // beginning of the loop
     beq $s0, 10, subCharacter
     addi $t0,$t0,1
     beq $s0, 44, subCharacter // commas
+checkString:
+    bgt $t2,0,invalidCharacter // checking for spaces or tabs
+    beq $s0, 9,  skipping // if tab, move to gap function
+    beq $s0, 32, skipping // if space, move to gap function
+    ble $s0, 47, invalidCharacter // less than 48 = invalid
+    ble $s0, 57, vaildCharacter // integers = valid
+    ble $s0, 64, invalidCharacter // less than 64 = invalid
+    ble $s0, 84, vaildCharacter // starting with A (capital) = valid
+    beq $s0, 96, invalidCharacter // less than 96 = invalid
+    ble $s0, 117, vaildCharacter // less than 117 (u) = valid
+    beq $s0, 118, invalidCharacter // greater than 117 = valid
+skipping:
+    addi $t2,$t2,-1
+    j moving // jumping to loop function
