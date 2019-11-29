@@ -7,3 +7,9 @@ data: .space 1001 // limiting the amount of characters
     comma: .asciiz ","
 .text
 main:
+main:
+// takes in user input
+    li $v0,8
+    la $a0,data // loading data
+    li $a1, 1001 // limiting the amount of characters
+    syscall // system call
