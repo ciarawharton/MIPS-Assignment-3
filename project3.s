@@ -67,7 +67,6 @@ invalidCharacter:
     beq $s0, 44, withinString
     j invalidCharacter // jumping to function
 withinString:
-    
     addi $t1,$t1,1
     sub $sp, $sp,4
     sw $t7, 0($sp)
@@ -79,7 +78,6 @@ withinString:
     li $t3,0
     li $t2,0
     j moving
-
 subCharacter:
     bgt $t2,0,withinString
     bge $t3,5,withinString
@@ -96,3 +94,18 @@ subCharacter:
     beq $s0,44, invalidCharacter
     li $t2,0
     j moving
+subprogram2:
+    beq $t3,0,finish
+    addi $t3,$t3,-1
+    lb $s0, ($t4)
+    addi $t4,$t4,1
+    j subprogram3
+moveForward:
+    sw $s1,0($sp)
+    j subprogram2
+subprogram3:
+    move $t8, $t3
+    li $t9, 1
+    ble $s0, 57, number
+    ble $s0, 84, uppercase
+    ble $s0, 116, lowercase
