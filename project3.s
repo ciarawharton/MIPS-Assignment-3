@@ -32,3 +32,12 @@ beq $s0, 9, skipCharacter // if the bit is a tab, it skips
 beq $s0, 32, skipCharacter // if the bit is a space, it skips
 move $t6, $t0 // storing characters
 j moving // moving to the looping function
+skipCharacter: // skipping characters
+    addi $t0,$t0,1
+    j beginning // jumping to the beginning function
+moving: // beginning of the loop
+    lb $s0, ($t0) // loading bits
+    beq $s0, 0, subCharacter // undefined bits
+    beq $s0, 10, subCharacter
+    addi $t0,$t0,1
+    beq $s0, 44, subCharacter // commas
