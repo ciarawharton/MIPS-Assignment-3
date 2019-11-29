@@ -66,3 +66,33 @@ invalidCharacter:
     addi $t0,$t0,1
     beq $s0, 44, withinString
     j invalidCharacter // jumping to function
+withinString:
+    
+    addi $t1,$t1,1
+    sub $sp, $sp,4
+    sw $t7, 0($sp)
+    move $t6,$t0
+    lb $s0, ($t0)
+    beq $s0, 0, forward
+    beq $s0, 10, forward
+    beq $s0,44, invalidCharacter
+    li $t3,0
+    li $t2,0
+    j moving
+
+subCharacter:
+    bgt $t2,0,withinString
+    bge $t3,5,withinString
+    addi $t1,$t1,1
+    sub $sp, $sp,4
+    sw $t6, 0($sp)
+    move $t6,$t0
+    lw $t4,0($sp)
+    li $s1,0
+    jal subprogram2
+    lb $s0, ($t0)
+    beq $s0, 0, forward
+    beq $s0, 10, forward
+    beq $s0,44, invalidCharacter
+    li $t2,0
+    j moving
