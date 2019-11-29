@@ -133,4 +133,29 @@ exponent:
     mul $t9, $t9, 30
     addi $t8, $t8, -1
     j exponent
-
+finish : jr $ra
+display:
+    mul $t1,$t1,4
+    add $sp, $sp $t1
+done:
+    sub $t1, $t1,4
+    sub $sp,$sp,4
+    lw $s7, 0($sp)
+    beq $s7,-1,invalidDisplay
+    li $v0, 1
+    lw $a0, 0($sp)
+    syscall
+commaCharacter:
+    beq $t1, 0,Exit
+    li $v0, 4
+    la $a0, comma
+    syscall
+    j done
+invalidDisplay:
+    li $v0, 4
+    la $a0, notvalid
+    syscall
+    j commaCharacter
+Exit:
+    li $v0, 10
+    syscall
